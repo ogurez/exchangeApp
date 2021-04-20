@@ -1,0 +1,21 @@
+h1 {
+    margin: 0
+}
+
+.detail {
+    display: flex;
+    justify-content: space-evenly
+}
+
+.exchange-cancel-button {
+    cursor: pointer;
+  width: 30%;
+  height: 30px;
+  margin: auto;
+  margin-right: 10px;
+  margin-top: 10px;
+  border: 1px solid #58b4ae;
+  border-radius: 2px;
+  background-color: white;
+  color: black;
+}

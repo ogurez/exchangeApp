@@ -1,23 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
+import "./App.css";
+import {ExchangeSuccess, ExchangeForm, ExchangeDetails, ExchangeFormStore} from './Exchange'
+
+
+const exchangeFormStore = ExchangeFormStore(0, 0, "", "", [], [], false);
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Switch>
+          <Route
+            exact
+            path="/"
+            key="1"
+            component={(props) => (
+              <ExchangeForm {...props} store={exchangeFormStore} />
+            )}
+          >
+            <ExchangeForm store={exchangeFormStore} />
+          </Route>
+          <Route
+            exact
+            path="/details"
+            key="2"
+            component={(props) => (
+              <ExchangeDetails {...props} store={exchangeFormStore} />
+            )}
+          />
+          <Route exact path="/succes" key="3" component={() => <ExchangeSuccess/>}/>
+        </Switch>
+      </Router>
     </div>
   );
 }
