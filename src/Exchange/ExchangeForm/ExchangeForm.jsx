@@ -1,17 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { observer } from "mobx-react-lite";
-import { Input, Button} from "antd";
+import { Input, Button } from "antd";
+
+
+/**
+ * The way inputs changes handled can be refactored, 
+ * but there are some issues with mobx store(probably redux would be a better option) 
+ * and not much time I have to investigate it
+ */
 
 export const ExchangeForm = observer(({ store }) => {
   const [sellCurrency, setSellCurrency] = useState(0);
   const [sellAmount, setSellAmount] = useState(0);
-  const [isLoaded, setIsLoaded] = useState(false);
   const [buyAmount, setBuyAmount] = useState(0);
   const [buyCurrency, setBuyCurrency] = useState(0);
+
   useEffect(() => {
     store.getCurrencies();
   }, []);
+
   useEffect(() => {
     setBuyAmount(store.buyAmount);
     setSellAmount(store.sellAmount);
@@ -28,14 +36,12 @@ export const ExchangeForm = observer(({ store }) => {
     );
   };
   const onSellAmountChange = (e) => {
-    //setSellAmount(e.target.value);
     store.calculateExchange(
       "invoice",
       e.target.value,
       sellCurrency,
       buyCurrency
     );
-    //setBuyAmount(store.buyAmount);
   };
 
   const onBuyCurrencyChange = (e) => {
@@ -49,14 +55,12 @@ export const ExchangeForm = observer(({ store }) => {
     );
   };
   const onBuyAmountChange = (e) => {
-    //setBuyAmount(e.target.value);
     store.calculateExchange(
       "withdraw",
       e.target.value,
       sellCurrency,
       buyCurrency
     );
-    //setSellAmount(store.sellAmount)
   };
 
   return (
@@ -65,12 +69,7 @@ export const ExchangeForm = observer(({ store }) => {
         <div className="exchange-form-inputs-container">
           <div className="exchange-form-section">
             <p>Sell</p>
-            <select
-              value={sellCurrency}
-              onChange={
-                onSellCurrencyChange /* e => onChange(e, setSellCurrency) */
-              }
-            >
+            <select value={sellCurrency} onChange={onSellCurrencyChange}>
               {store.sellCurrencies.map((v) => (
                 <option value={v.id}>{v.name}</option>
               ))}
@@ -84,12 +83,7 @@ export const ExchangeForm = observer(({ store }) => {
           </div>
           <div className="exchange-form-section">
             <p>Buy</p>
-            <select
-              value={buyCurrency}
-              onChange={
-                onBuyCurrencyChange /* e => onChange(e, setBuyCurrency) */
-              }
-            >
+            <select value={buyCurrency} onChange={onBuyCurrencyChange}>
               {store.buyCurrencies.map((v) => (
                 <option value={v.id}>{v.name}</option>
               ))}
