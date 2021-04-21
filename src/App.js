@@ -1,9 +1,13 @@
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import "./App.css";
-import {ExchangeSuccess, ExchangeForm, ExchangeDetails, ExchangeFormStore} from './Exchange'
+import {
+  ExchangeSuccess,
+  ExchangeForm,
+  ExchangeDetails,
+  ExchangeFormStore,
+} from "./Exchange";
 
-
-const exchangeFormStore = ExchangeFormStore(0, 0, "", "", [], [], false);
+const exchangeFormStore = ExchangeFormStore(0, 0, "", "", [], [], false, false);
 
 function App() {
   return (
@@ -28,7 +32,12 @@ function App() {
               <ExchangeDetails {...props} store={exchangeFormStore} />
             )}
           />
-          <Route exact path="/succes" key="3" component={() => <ExchangeSuccess/>}/>
+          <Route
+            exact
+            path="/success"
+            key="3"
+            component={(props) => <ExchangeSuccess {...props} />}
+          />
         </Switch>
       </Router>
     </div>
